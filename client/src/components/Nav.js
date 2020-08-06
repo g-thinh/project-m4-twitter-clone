@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import { ReactComponent as Logo } from "../assets/logo.svg";
 
@@ -15,20 +15,34 @@ const Nav = ({ children }) => {
         <Logo style={{ height: 60, width: 60 }} />
         <NavList>
           <NavItem>
-            <FiHome size={30} />
-            <StyledLink to="/">Home</StyledLink>
+            <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
+              <FiHome size={32} />
+              <span>Home</span>
+            </StyledLink>
           </NavItem>
           <NavItem>
-            <FiUser size={30} />
-            <StyledLink to="/:profileId">Profile</StyledLink>
+            <StyledLink
+              to="/:profileId"
+              activeStyle={{ color: COLORS.primary }}
+            >
+              <FiUser size={32} />
+              <span>Profile</span>
+            </StyledLink>
           </NavItem>
           <NavItem>
-            <FiBell size={30} />
-            <StyledLink to="/notifications">Notifications</StyledLink>
+            <StyledLink
+              to="/notifications"
+              activeStyle={{ color: COLORS.primary }}
+            >
+              <FiBell size={32} />
+              <span>Notifications</span>
+            </StyledLink>
           </NavItem>
           <NavItem>
-            <FiBookmark size={30} />
-            <StyledLink to="/bookmarks">Bookmarks</StyledLink>
+            <StyledLink to="/bookmarks" activeStyle={{ color: COLORS.primary }}>
+              <FiBookmark size={32} />
+              <span>Bookmarks</span>
+            </StyledLink>
           </NavItem>
         </NavList>
         <MeowButton>Meow</MeowButton>
@@ -38,12 +52,19 @@ const Nav = ({ children }) => {
   );
 };
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-weight: 800;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   text-decoration: none;
   color: black;
-  padding-left: 12px;
+  /* padding-left: 12px; */
+
+  & span {
+    padding-left: 25px;
+  }
 `;
 
 const SideBar = styled.div`
