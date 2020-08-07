@@ -12,28 +12,32 @@ import TweetDetails from "./components/TweetDetails";
 import Profile from "./components/Profile";
 import Nav from "./components/Nav";
 
+import { CurrentUserProvider } from "./components/CurrentUserContext";
+
 export default function App() {
   return (
     <Router>
       <Nav>
-        <Switch>
-          <Route exact={true} path="/">
-            <HomeFeed />
-          </Route>
-          <Route path="/notifications">
-            <Notifications />
-          </Route>
-          <Route path="/bookmarks">
-            <Bookmarks />
-          </Route>
-          <Route path="/tweet/:tweetId">
-            <TweetDetails />
-          </Route>
-          <Route path="/:profileId">
-            <Profile />
-          </Route>
-        </Switch>
-        <GlobalStyles />
+        <CurrentUserProvider>
+          <Switch>
+            <Route exact={true} path="/">
+              <HomeFeed />
+            </Route>
+            <Route path="/notifications">
+              <Notifications />
+            </Route>
+            <Route path="/bookmarks">
+              <Bookmarks />
+            </Route>
+            <Route path="/tweet/:tweetId">
+              <TweetDetails />
+            </Route>
+            <Route path="/:profileId">
+              <Profile />
+            </Route>
+          </Switch>
+          <GlobalStyles />
+        </CurrentUserProvider>
       </Nav>
     </Router>
   );
