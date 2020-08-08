@@ -6,18 +6,13 @@ import { CurrentUserContext } from "../CurrentUserContext";
 import { LoadingSpinner } from "../LoadingSpinner";
 
 import { PostMessage } from "./PostMessage";
+import { UserFeed } from "./UserFeed";
 
 const HomeFeed = () => {
   //### STATES AND CONTEXT ####
 
-  const {
-    currentUser,
-    profileStatus,
-    // homeFeedStatus,
-    // homeFeed,
-  } = React.useContext(CurrentUserContext);
-
-  const [homeFeed, setHomeFeed] = React.useState([]);
+  const { currentUser, profileStatus } = React.useContext(CurrentUserContext);
+  const [homeFeed, setHomeFeed] = React.useState();
   const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
 
   //### FUNCTIONS AND HOOKS ####
@@ -41,41 +36,39 @@ const HomeFeed = () => {
 
   React.useEffect(() => {
     fetchHomeFeed();
-  });
+  }, []);
 
   //### CONSOLE LOG STUFF ###
 
-  if (homeFeedStatus === "idle") {
-    console.log("HomeFeed data received!");
-    console.log(homeFeed);
-  } else {
-    console.log(homeFeed);
-    console.log("HomeFeed Data is still loading...");
-  }
+  // if (profileStatus === "idle") {
+  //   console.log("HomeFeed received data!");
+  //   console.log(currentUser.profile);
+  // } else {
+  //   console.log(currentUser);
+  //   console.log("Profile Data is still loading...");
+  // }
 
-  if (profileStatus === "idle") {
-    console.log("HomeFeed received data!");
-    console.log(currentUser.profile);
-  } else {
-    console.log(currentUser);
-    console.log("Profile Data is still loading...");
-  }
+  // if (homeFeedStatus === "idle") {
+  //   console.log("HomeFeed data received!");
+  //   console.log(homeFeed);
+  // } else {
+  //   console.log(homeFeed);
+  //   console.log("HomeFeed Data is still loading...");
+  // }
 
-  // ### RENDER COMPONENENT ###
+  // ### RENDER COMPONENT ###
   return (
     <Wrapper>
       <Title>Home</Title>
       {profileStatus === "idle" ? (
         <PostMessage avatarSrc={currentUser.profile.avatarSrc} />
       ) : (
-        // <img src={currentUser.profile.avatarSrc} alt="user profile" />
         <LoadingSpinner />
       )}
       <br />
       {homeFeedStatus === "idle" ? (
-        <h1>This is the Home Feet Tweets</h1>
+        <UserFeed data={homeFeed} />
       ) : (
-        // <img src={currentUser.profile.avatarSrc} alt="user profile" />
         <LoadingSpinner />
       )}
     </Wrapper>
