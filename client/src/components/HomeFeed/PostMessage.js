@@ -4,13 +4,23 @@ import styled from "styled-components";
 import { COLORS } from "../COLORS";
 
 export const PostMessage = (props) => {
+  const [charCount, setCharCount] = React.useState(280);
+
   return (
     <Wrapper>
       <MessageContainer>
         <Avatar src={props.avatarSrc} alt="user profile" />
-        <TextArea type="text" placeholder="What's happening?..."></TextArea>
+        <TextArea
+          type="text"
+          placeholder="What's happening?..."
+          maxlength="280"
+          onChange={(ev) => {
+            setCharCount(280 - ev.target.value.length);
+          }}
+        ></TextArea>
       </MessageContainer>
       <MessageButtonCtn>
+        <MsgCount>{charCount}</MsgCount>
         <MsgButton>Post</MsgButton>
       </MessageButtonCtn>
     </Wrapper>
@@ -32,8 +42,14 @@ const MessageContainer = styled.div`
 
 const MessageButtonCtn = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
   margin: 10px 50px;
+`;
+
+const MsgCount = styled.h1`
+  font-size: 1.3rem;
+  opacity: 0.5;
 `;
 
 const MsgButton = styled.button`
