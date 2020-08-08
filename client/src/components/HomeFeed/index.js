@@ -7,6 +7,7 @@ import { LoadingSpinner } from "../LoadingSpinner";
 
 import { PostMessage } from "./PostMessage";
 import { UserFeed } from "./UserFeed";
+import { Tweet } from "../Tweet";
 
 const HomeFeed = () => {
   //### STATES AND CONTEXT ####
@@ -66,8 +67,13 @@ const HomeFeed = () => {
         <LoadingSpinner />
       )}
       <br />
-      {homeFeedStatus === "idle" ? (
+      {/* {homeFeedStatus === "idle" ? (
         <UserFeed data={homeFeed} />
+      ) : (
+        <LoadingSpinner />
+      )} */}
+      {homeFeedStatus === "idle" ? (
+        <Tweet data={homeFeed} />
       ) : (
         <LoadingSpinner />
       )}
