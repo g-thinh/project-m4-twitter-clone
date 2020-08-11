@@ -6,7 +6,9 @@ export const Header = (props) => {
   return (
     <TweetHandleBar>
       <Avatar src={props.avatarSrc} />
-      <DisplayName>{props.displayName}</DisplayName>
+      <DisplayName href={`/${props.handleName}`}>
+        {props.displayName}
+      </DisplayName>
       <HandleName>@{props.handleName}</HandleName>
       <TimeStamp>- {moment(props.timestamp).format("MMM Do")}</TimeStamp>
     </TweetHandleBar>
@@ -32,8 +34,11 @@ const Avatar = styled.img`
   margin: 15px;
 `;
 
-const DisplayName = styled.h1`
+const DisplayName = styled.a`
   font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  color: black;
 `;
 
 const HandleName = styled.h2`
