@@ -6,47 +6,60 @@ import { ReactComponent as Logo } from "../assets/logo.svg";
 
 import { FiHome, FiUser, FiBell, FiBookmark } from "react-icons/fi";
 
+import { CurrentUserContext } from "./CurrentUserContext";
+
 import { COLORS } from "./COLORS";
 
+// ##################### MAIN NAV COMPONENT ########################
 const Nav = ({ children }) => {
+  //here i import the currentUserContext to provide the default url parameter
+  //to go to the profile page
+
+  const { currentUser, profileStatus } = React.useContext(CurrentUserContext);
+
   return (
     <SideBar>
-      <NavWrapper>
-        <Logo style={{ height: 60, width: 60 }} />
-        <NavList>
-          <NavItem>
-            <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
-              <FiHome size={32} />
-              <span>Home</span>
-            </StyledLink>
-          </NavItem>
-          <NavItem>
-            <StyledLink
-              to="/:profileId"
-              activeStyle={{ color: COLORS.primary }}
-            >
-              <FiUser size={32} />
-              <span>Profile</span>
-            </StyledLink>
-          </NavItem>
-          <NavItem>
-            <StyledLink
-              to="/notifications"
-              activeStyle={{ color: COLORS.primary }}
-            >
-              <FiBell size={32} />
-              <span>Notifications</span>
-            </StyledLink>
-          </NavItem>
-          <NavItem>
-            <StyledLink to="/bookmarks" activeStyle={{ color: COLORS.primary }}>
-              <FiBookmark size={32} />
-              <span>Bookmarks</span>
-            </StyledLink>
-          </NavItem>
-        </NavList>
-        <MeowButton>Meow</MeowButton>
-      </NavWrapper>
+      {profileStatus === "idle" && (
+        <NavWrapper>
+          <Logo style={{ height: 60, width: 60 }} />
+          <NavList>
+            <NavItem>
+              <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
+                <FiHome size={32} />
+                <span>Home</span>
+              </StyledLink>
+            </NavItem>
+            <NavItem>
+              <StyledLink
+                to={`/${currentUser.profile.handle}`}
+                activeStyle={{ color: COLORS.primary }}
+              >
+                <FiUser size={32} />
+                <span>Profile</span>
+              </StyledLink>
+            </NavItem>
+            <NavItem>
+              <StyledLink
+                to="/notifications"
+                activeStyle={{ color: COLORS.primary }}
+              >
+                <FiBell size={32} />
+                <span>Notifications</span>
+              </StyledLink>
+            </NavItem>
+            <NavItem>
+              <StyledLink
+                to="/bookmarks"
+                activeStyle={{ color: COLORS.primary }}
+              >
+                <FiBookmark size={32} />
+                <span>Bookmarks</span>
+              </StyledLink>
+            </NavItem>
+          </NavList>
+          <MeowButton>Meow</MeowButton>
+        </NavWrapper>
+      )}
       {children}
     </SideBar>
   );
@@ -77,7 +90,7 @@ const NavWrapper = styled.div`
   flex-direction: column;
   /* border: 5px solid purple; */
   height: 100vh;
-  width: 30%;
+  width: 33%;
   margin-top: 2%;
 `;
 

@@ -35,6 +35,9 @@ export const CurrentUserProvider = ({ children }) => {
     // Promise.all(p)
     //Promise.all([p1,p2]).then(([r1,r2])=> {setHomeFeed(r1)})
     fetchProfile();
+
+    //post then fetch new udpated tweets
+    //postTweet().then(fetchTweet());
   }, []);
 
   return (

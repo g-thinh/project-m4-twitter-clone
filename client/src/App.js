@@ -17,8 +17,8 @@ import { CurrentUserProvider } from "./components/CurrentUserContext";
 export default function App() {
   return (
     <Router>
-      <Nav>
-        <CurrentUserProvider>
+      <CurrentUserProvider>
+        <Nav>
           <Switch>
             <Route exact={true} path="/">
               <HomeFeed />
@@ -37,8 +37,8 @@ export default function App() {
             </Route>
           </Switch>
           <GlobalStyles />
-        </CurrentUserProvider>
-      </Nav>
+        </Nav>
+      </CurrentUserProvider>
     </Router>
   );
 }
