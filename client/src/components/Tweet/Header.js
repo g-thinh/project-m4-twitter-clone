@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import moment from "moment";
+import { format } from "date-fns";
 
 export const Header = (props) => {
   return (
@@ -10,7 +10,7 @@ export const Header = (props) => {
         {props.displayName}
       </DisplayName>
       <HandleName>@{props.handleName}</HandleName>
-      <TimeStamp>- {moment(props.timestamp).format("MMM Do")}</TimeStamp>
+      <TimeStamp>- {format(new Date(props.timestamp), "MMM Do")}</TimeStamp>
     </TweetHandleBar>
   );
 };

@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { COLORS } from "../COLORS";
 
-import moment from "moment";
+import { format } from "date-fns";
 
 import { FiCalendar, FiGlobe, FiLink } from "react-icons/fi";
 
@@ -45,7 +45,7 @@ const Header = (props) => {
             </>
           )}
           <FiCalendar size={22} />
-          <Stat>Joined {moment(DATA.joined).format("MMMM YYYY")}</Stat>
+          <Stat>Joined {format(new Date(DATA.joined), "MMMM yyyy")}</Stat>
         </Row>
         <Row>
           <Stat>
