@@ -21,14 +21,20 @@ export const Tweet = (props) => {
   return (
     <TweetList>
       {ID.map((id) => (
-        <li key={id}>
+        <li
+          key={id}
+          // onClick={() => console.log("Hello!")}
+          //onClick={() => (window.location = `/${TWEETS[id].author.handle}`)}
+        >
           <Header
             avatarSrc={TWEETS[id].author.avatarSrc}
             displayName={TWEETS[id].author.displayName}
             handleName={TWEETS[id].author.handle}
             timestamp={TWEETS[id].timestamp}
           />
-          <Content message={TWEETS[id].status} media={TWEETS[id].media} />
+          <a href={`/tweet/${TWEETS[id].id}`}>
+            <Content message={TWEETS[id].status} media={TWEETS[id].media} />
+          </a>
           <ActionBar
             isRetweeted={TWEETS[id].isRetweeted}
             isLiked={TWEETS[id].isLiked}
@@ -47,5 +53,15 @@ const TweetList = styled.ul`
 
   & li {
     border-bottom: 1px solid lightgray;
+    border: 5px solid red;
+  }
+
+  & li:hover {
+    background: #f9f9f9;
+  }
+
+  & a {
+    color: inherit;
+    text-decoration: none;
   }
 `;
