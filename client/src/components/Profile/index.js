@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import { LoadingSpinner } from "../LoadingSpinner";
+import { ProfileTabs } from "../ProfileTabs";
 
 import Header from "./Header";
+import UserFeed from "../UserFeed";
 
 const Profile = () => {
   const [userProfile, setUserProfile] = React.useState(null);
@@ -33,7 +35,11 @@ const Profile = () => {
   return (
     <Wrapper>
       {userProfileStatus === "idle" ? (
-        <Header data={userProfile} />
+        <>
+          <Header data={userProfile} />
+          <ProfileTabs />
+          <UserFeed />
+        </>
       ) : (
         <LoadingSpinner />
       )}

@@ -92,7 +92,7 @@ const ProfileContainer = styled.div`
   display: block;
   position: relative;
   width: 100%;
-  height: 500px;
+  height: 30%;
   /* border: 3px solid goldenrod; */
   margin: -120px 0 auto 0;
   padding: 20px;
