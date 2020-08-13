@@ -6,7 +6,6 @@ import { CurrentUserContext } from "../CurrentUserContext";
 import { LoadingSpinner } from "../LoadingSpinner";
 
 import { PostMessage } from "./PostMessage";
-import { UserFeed } from "./UserFeed";
 import { Tweet } from "../Tweet";
 
 const HomeFeed = () => {
