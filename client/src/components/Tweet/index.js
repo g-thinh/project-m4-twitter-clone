@@ -13,10 +13,10 @@ export const Tweet = (props) => {
   const TWEETS = props.data.tweetsById;
 
   ID.forEach((id) => {
-    console.log(TWEETS[id]);
+    if (typeof TWEETS[id].retweetFrom != "undefined") {
+      console.log(TWEETS[id]);
+    }
   });
-
-  // console.log(ID);
 
   return (
     <TweetList>
@@ -27,6 +27,7 @@ export const Tweet = (props) => {
           //onClick={() => (window.location = `/${TWEETS[id].author.handle}`)}
         >
           <Header
+            retweet={TWEETS[id].retweetFrom}
             avatarSrc={TWEETS[id].author.avatarSrc}
             displayName={TWEETS[id].author.displayName}
             handleName={TWEETS[id].author.handle}
@@ -53,7 +54,7 @@ const TweetList = styled.ul`
 
   & li {
     border-bottom: 1px solid lightgray;
-    border: 5px solid red;
+    /* border: 5px solid red; */
   }
 
   & li:hover {
