@@ -3,14 +3,21 @@ import styled from "styled-components";
 
 import { COLORS } from "../COLORS";
 
+import { CurrentUserContext } from "../CurrentUserContext";
+
 export const PostMessage = (props) => {
-  const [charCount, setCharCount] = React.useState(280);
+  //const [charCount, setCharCount] = React.useState(280);
+
+  const { currentUser, charCount, setCharCount } = React.useContext(
+    CurrentUserContext
+  );
 
   return (
     <Wrapper>
       <MessageContainer>
-        <Avatar src={props.avatarSrc} alt="user profile" />
+        <Avatar src={currentUser.profile.avatarSrc} alt="user profile" />
         <TextArea
+          id="Message"
           type="text"
           placeholder="What's happening?..."
           maxlength="280"
@@ -21,7 +28,7 @@ export const PostMessage = (props) => {
       </MessageContainer>
       <MessageButtonCtn>
         <MsgCount>{charCount}</MsgCount>
-        <MsgButton>Post</MsgButton>
+        <MsgButton onClick={props.handleOnClick}>Post</MsgButton>
       </MessageButtonCtn>
     </Wrapper>
   );

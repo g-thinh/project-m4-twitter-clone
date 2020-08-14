@@ -3,10 +3,14 @@ import React from "react";
 export const CurrentUserContext = React.createContext(null);
 
 export const CurrentUserProvider = ({ children }) => {
+  // These states define what the current user can interact with, which includes
+  // creating posts
+
   const [currentUser, setCurrentUser] = React.useState(null);
-  // const [homeFeed, setHomeFeed] = React.useState([]);
-  // const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
+  const [homeFeed, setHomeFeed] = React.useState([]);
+  const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
   const [profileStatus, setProfileStatus] = React.useState("loading");
+  const [charCount, setCharCount] = React.useState(280);
 
   // Fetch the user data from the API (/me/profile)
   // When the data is received, update currentUser.
@@ -18,8 +22,6 @@ export const CurrentUserProvider = ({ children }) => {
       const res = await fetch(url);
       const data = await res.json();
       setCurrentUser(data);
-      console.log("data has been loaded!");
-      // setStatus("idle");
       setProfileStatus("idle");
     } catch (error) {
       console.log(
@@ -28,20 +30,69 @@ export const CurrentUserProvider = ({ children }) => {
     }
   };
 
-  React.useEffect(() => {
-    // const p1 = fetchProfile();
-    // const p2 = fetchHomeFeed();
-    // const p = [p1,p2];
-    // Promise.all(p)
-    //Promise.all([p1,p2]).then(([r1,r2])=> {setHomeFeed(r1)})
-    fetchProfile();
+  const fetchHomeFeed = async () => {
+    const url = "/api/me/home-feed";
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setHomeFeed(data);
+      setHomeFeedStatus("idle");
+    } catch (error) {
+      console.log(
+        `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
+      );
+    }
+  };
 
-    //post then fetch new udpated tweets
-    //postTweet().then(fetchTweet());
+  //the PostMessage component contains a TextArea with an ID called "Message"
+  //once the tweet is posted, re-fetch the homeFeed which triggers a re-render
+  //within the HomeFeed component
+
+  const postTweet = () => {
+    const url = `/api/tweet`;
+    let msg = document.getElementById("Message").value;
+    try {
+      fetch(url, {
+        method: "POST",
+        body: JSON.stringify({ status: msg }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then(fetchHomeFeed());
+      document.getElementById("Message").value = "";
+
+      setCharCount(280);
+    } catch (error) {
+      console.log(
+        `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
+      );
+    }
+  };
+
+  // Once the Context Provider mounts, it will fetch the current user's tweet feed
+  // and profile data ONCE
+
+  React.useEffect(() => {
+    fetchProfile();
+    fetchHomeFeed();
   }, []);
 
   return (
-    <CurrentUserContext.Provider value={{ currentUser, profileStatus }}>
+    <CurrentUserContext.Provider
+      value={{
+        currentUser,
+        profileStatus,
+        homeFeed,
+        setHomeFeed,
+        homeFeedStatus,
+        setHomeFeedStatus,
+        charCount,
+        setCharCount,
+        fetchHomeFeed,
+        postTweet,
+      }}
+    >
       {children}
     </CurrentUserContext.Provider>
   );

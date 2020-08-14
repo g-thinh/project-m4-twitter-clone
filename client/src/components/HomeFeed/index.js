@@ -1,76 +1,40 @@
 import React from "react";
 import styled from "styled-components";
 
+// ## COMPONENTS ##
 import { CurrentUserContext } from "../CurrentUserContext";
-
 import { LoadingSpinner } from "../LoadingSpinner";
-
 import { PostMessage } from "./PostMessage";
 import { Tweet } from "../Tweet";
 
 const HomeFeed = () => {
-  //### STATES AND CONTEXT ####
+  const {
+    currentUser,
+    profileStatus,
+    homeFeed,
+    homeFeedStatus,
+    postTweet,
+  } = React.useContext(CurrentUserContext);
 
-  const { currentUser, profileStatus } = React.useContext(CurrentUserContext);
-  const [homeFeed, setHomeFeed] = React.useState();
-  const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
-
-  //### FUNCTIONS AND HOOKS ####
-
-  const fetchHomeFeed = async () => {
-    const url = "/api/me/home-feed";
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      // console.log(data);
-      setHomeFeed(data);
-      // console.log("data has been loaded!");
-      // setStatus("idle");
-      setHomeFeedStatus("idle");
-    } catch (error) {
-      console.log(
-        `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
-      );
-    }
-  };
+  //When the user posts a tweet, the homeFeed state will get updated
+  //and the useEffect() will trigger a re-render
 
   React.useEffect(() => {
-    fetchHomeFeed();
-  }, []);
+    console.log("New Post Received, re-rendering...");
+  }, [homeFeed]);
 
-  //### CONSOLE LOG STUFF ###
-
-  // if (profileStatus === "idle") {
-  //   console.log("HomeFeed received data!");
-  //   console.log(currentUser.profile);
-  // } else {
-  //   console.log(currentUser);
-  //   console.log("Profile Data is still loading...");
-  // }
-
-  // if (homeFeedStatus === "idle") {
-  //   console.log("HomeFeed data received!");
-  //   console.log(homeFeed);
-  // } else {
-  //   console.log(homeFeed);
-  //   console.log("HomeFeed Data is still loading...");
-  // }
-
-  // ### RENDER COMPONENT ###
   return (
     <Wrapper>
       <Title>Home</Title>
       {profileStatus === "idle" ? (
-        <PostMessage avatarSrc={currentUser.profile.avatarSrc} />
+        <PostMessage
+          avatarSrc={currentUser.profile.avatarSrc}
+          handleOnClick={postTweet}
+        />
       ) : (
         <LoadingSpinner />
       )}
       <br />
-      {/* {homeFeedStatus === "idle" ? (
-        <UserFeed data={homeFeed} />
-      ) : (
-        <LoadingSpinner />
-      )} */}
       {homeFeedStatus === "idle" ? (
         <Tweet data={homeFeed} />
       ) : (
