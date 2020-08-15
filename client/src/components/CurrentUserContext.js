@@ -28,6 +28,7 @@ export const CurrentUserProvider = ({ children }) => {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
       );
+      window.location.href = "/404";
     }
   };
 
@@ -44,6 +45,7 @@ export const CurrentUserProvider = ({ children }) => {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
       );
+      window.location.href = "/404";
     }
   };
 

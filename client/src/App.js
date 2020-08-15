@@ -11,6 +11,7 @@ import Notifications from "./components/Notifications";
 import TweetDetails from "./components/TweetDetails";
 import Profile from "./components/Profile";
 import Nav from "./components/Nav";
+import Error from "./components/Error";
 
 import { CurrentUserProvider } from "./components/CurrentUserContext";
 
@@ -28,6 +29,9 @@ export default function App() {
             </Route>
             <Route path="/bookmarks">
               <Bookmarks />
+            </Route>
+            <Route path="/404">
+              <Error />
             </Route>
             <Route path="/tweet/:tweetId">
               <TweetDetails />
