@@ -4,7 +4,12 @@ import styled from "styled-components";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { BigTweet } from "./BigTweet";
 
+import { CurrentUserContext } from "./CurrentUserContext";
+
 const TweetDetails = () => {
+  const { currentUser } = React.useContext(CurrentUserContext);
+
+  console.log(currentUser);
   const [tweetDetails, setTweetDetails] = React.useState(null);
   const [tweetStatus, setTweetStatus] = React.useState("loading");
 
@@ -13,15 +18,16 @@ const TweetDetails = () => {
     try {
       const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
+      console.log(
+        `[TweetDetails.js] fetching tweet data from ${window.location.pathname}`
+      );
       setTweetDetails(data);
-      // console.log("data has been loaded!");
-      // setStatus("idle");
       setTweetStatus("idle");
     } catch (error) {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
       );
+      // window.location.href = "/";
     }
   };
 

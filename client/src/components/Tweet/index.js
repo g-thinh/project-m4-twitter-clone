@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 //### TWEET SUB-COMPONENT IMPORTS ####
 
@@ -12,20 +13,10 @@ export const Tweet = (props) => {
   const ID = props.data.tweetIds;
   const TWEETS = props.data.tweetsById;
 
-  ID.forEach((id) => {
-    if (typeof TWEETS[id].retweetFrom != "undefined") {
-      console.log(TWEETS[id]);
-    }
-  });
-
   return (
     <TweetList>
       {ID.map((id) => (
-        <li
-          key={id}
-          // onClick={() => console.log("Hello!")}
-          //onClick={() => (window.location = `/${TWEETS[id].author.handle}`)}
-        >
+        <li key={id}>
           <Header
             retweet={TWEETS[id].retweetFrom}
             avatarSrc={TWEETS[id].author.avatarSrc}
@@ -33,9 +24,9 @@ export const Tweet = (props) => {
             handleName={TWEETS[id].author.handle}
             timestamp={TWEETS[id].timestamp}
           />
-          <a href={`/tweet/${TWEETS[id].id}`}>
+          <Link to={`/tweet/${TWEETS[id].id}`}>
             <Content message={TWEETS[id].status} media={TWEETS[id].media} />
-          </a>
+          </Link>
           <ActionBar
             isRetweeted={TWEETS[id].isRetweeted}
             isLiked={TWEETS[id].isLiked}
