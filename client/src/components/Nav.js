@@ -15,51 +15,47 @@ const Nav = ({ children }) => {
   //here i import the currentUserContext to provide the default url parameter
   //to go to the profile page
 
-  const { currentUser, profileStatus } = React.useContext(CurrentUserContext);
+  //To make this easier, I wrote the link to the current User statically instead
+  //of using the Context
 
   return (
     <SideBar>
-      {profileStatus === "idle" && (
-        <NavWrapper>
-          <Logo style={{ height: 60, width: 60 }} />
-          <NavList>
-            <NavItem>
-              <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
-                <FiHome size={32} />
-                <span>Home</span>
-              </StyledLink>
-            </NavItem>
-            <NavItem>
-              <StyledLink
-                to={`/${currentUser.profile.handle}`}
-                activeStyle={{ color: COLORS.primary }}
-              >
-                <FiUser size={32} />
-                <span>Profile</span>
-              </StyledLink>
-            </NavItem>
-            <NavItem>
-              <StyledLink
-                to="/notifications"
-                activeStyle={{ color: COLORS.primary }}
-              >
-                <FiBell size={32} />
-                <span>Notifications</span>
-              </StyledLink>
-            </NavItem>
-            <NavItem>
-              <StyledLink
-                to="/bookmarks"
-                activeStyle={{ color: COLORS.primary }}
-              >
-                <FiBookmark size={32} />
-                <span>Bookmarks</span>
-              </StyledLink>
-            </NavItem>
-          </NavList>
-          <MeowButton>Meow</MeowButton>
-        </NavWrapper>
-      )}
+      <NavWrapper>
+        <Logo style={{ height: 60, width: 60 }} />
+        <NavList>
+          <NavItem>
+            <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
+              <FiHome size={32} />
+              <span>Home</span>
+            </StyledLink>
+          </NavItem>
+          <NavItem>
+            <StyledLink
+              to="/treasurymog"
+              activeStyle={{ color: COLORS.primary }}
+            >
+              <FiUser size={32} />
+              <span>Profile</span>
+            </StyledLink>
+          </NavItem>
+          <NavItem>
+            <StyledLink
+              to="/notifications"
+              activeStyle={{ color: COLORS.primary }}
+            >
+              <FiBell size={32} />
+              <span>Notifications</span>
+            </StyledLink>
+          </NavItem>
+          <NavItem>
+            <StyledLink to="/bookmarks" activeStyle={{ color: COLORS.primary }}>
+              <FiBookmark size={32} />
+              <span>Bookmarks</span>
+            </StyledLink>
+          </NavItem>
+        </NavList>
+        <MeowButton>Meow</MeowButton>
+      </NavWrapper>
       {children}
     </SideBar>
   );
