@@ -16,10 +16,10 @@ const Profile = () => {
     try {
       const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
+      console.log(
+        `[Profile.js] fetching profile data for ${window.location.pathname}`
+      );
       setUserProfile(data);
-      // console.log("data has been loaded!");
-      // setStatus("idle");
       setUserProfileStatus("idle");
     } catch (error) {
       console.log(

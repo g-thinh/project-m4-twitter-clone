@@ -8,8 +8,8 @@ import { Tweet } from "../Tweet";
 const UserFeed = () => {
   //### STATES AND CONTEXT ####
 
-  const [homeFeed, setHomeFeed] = React.useState();
-  const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
+  const [userFeed, setUserFeed] = React.useState();
+  const [userFeedStatus, setUserFeedStatus] = React.useState("loading");
 
   //### FUNCTIONS AND HOOKS ####
 
@@ -18,13 +18,11 @@ const UserFeed = () => {
   const fetchFeed = async () => {
     const url = `/api/${handleName}/feed`;
     try {
+      console.log(`[UserFeed.js] fetching feed data for ${handleName}`);
       const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
-      setHomeFeed(data);
-      // console.log("data has been loaded!");
-      // setStatus("idle");
-      setHomeFeedStatus("idle");
+      setUserFeed(data);
+      setUserFeedStatus("idle");
     } catch (error) {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
@@ -34,13 +32,13 @@ const UserFeed = () => {
 
   React.useEffect(() => {
     fetchFeed();
-  }, [homeFeed]);
+  }, []);
 
   // ### RENDER COMPONENT ###
   return (
     <Wrapper>
-      {homeFeedStatus === "idle" ? (
-        <Tweet data={homeFeed} />
+      {userFeedStatus === "idle" ? (
+        <Tweet data={userFeed} />
       ) : (
         <LoadingSpinner />
       )}

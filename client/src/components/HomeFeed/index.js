@@ -19,9 +19,7 @@ const HomeFeed = () => {
   //When the user posts a tweet, the homeFeed state will get updated
   //and the useEffect() will trigger a re-render
 
-  React.useEffect(() => {
-    console.log("New Post Received, re-rendering...");
-  }, [homeFeed]);
+  React.useEffect(() => {}, [homeFeed]);
 
   return (
     <Wrapper>
