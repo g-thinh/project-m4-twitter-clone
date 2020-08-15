@@ -6,6 +6,7 @@ export const CurrentUserProvider = ({ children }) => {
   // These states define what the current user can interact with, which includes
   // creating posts
 
+  // ####### USER STATES #######
   const [currentUser, setCurrentUser] = React.useState(null);
   const [homeFeed, setHomeFeed] = React.useState([]);
   const [homeFeedStatus, setHomeFeedStatus] = React.useState("loading");
@@ -17,7 +18,7 @@ export const CurrentUserProvider = ({ children }) => {
   // Also, set `status` to `idle`
 
   const fetchProfile = async () => {
-    const url = "/api/me/profile";
+    const url = `/api/me/profile`;
     try {
       const res = await fetch(url);
       const data = await res.json();
@@ -30,8 +31,10 @@ export const CurrentUserProvider = ({ children }) => {
     }
   };
 
+  // ############ HOME FEED FETCHES ##########
+
   const fetchHomeFeed = async () => {
-    const url = "/api/me/home-feed";
+    const url = `/api/me/home-feed`;
     try {
       const res = await fetch(url);
       const data = await res.json();
@@ -61,8 +64,8 @@ export const CurrentUserProvider = ({ children }) => {
         },
       }).then(fetchHomeFeed());
       document.getElementById("Message").value = "";
-
       setCharCount(280);
+      console.log("[HomeFeed.js] New Post Received, re-rendering...");
     } catch (error) {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
@@ -91,6 +94,7 @@ export const CurrentUserProvider = ({ children }) => {
         setCharCount,
         fetchHomeFeed,
         postTweet,
+        fetchProfile,
       }}
     >
       {children}
