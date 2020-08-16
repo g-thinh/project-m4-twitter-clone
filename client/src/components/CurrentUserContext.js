@@ -75,6 +75,16 @@ export const CurrentUserProvider = ({ children }) => {
     }
   };
 
+  function SendPost(ev) {
+    ev.preventDefault();
+    console.log("SendPost Triggered");
+    if (charCount > 0) {
+      postTweet();
+    } else {
+      window.alert("Too many letters");
+    }
+  }
+
   // Once the Context Provider mounts, it will fetch the current user's tweet feed
   // and profile data ONCE
 
@@ -97,6 +107,7 @@ export const CurrentUserProvider = ({ children }) => {
         fetchHomeFeed,
         postTweet,
         fetchProfile,
+        SendPost,
       }}
     >
       {children}

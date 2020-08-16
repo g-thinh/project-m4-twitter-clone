@@ -14,6 +14,7 @@ const HomeFeed = () => {
     homeFeed,
     homeFeedStatus,
     postTweet,
+    SendPost,
   } = React.useContext(CurrentUserContext);
 
   //When the user posts a tweet, the homeFeed state will get updated
@@ -27,7 +28,7 @@ const HomeFeed = () => {
       {profileStatus === "idle" ? (
         <PostMessage
           avatarSrc={currentUser.profile.avatarSrc}
-          handleOnClick={postTweet}
+          handleOnClick={SendPost}
         />
       ) : (
         <LoadingSpinner />
@@ -51,8 +52,10 @@ const Title = styled.h1`
 `;
 
 const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   border: 1px solid lightgray;
-  width: 100%;
+  width: 80%;
 `;
 
 export default HomeFeed;

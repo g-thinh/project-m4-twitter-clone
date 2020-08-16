@@ -5,12 +5,18 @@ import { COLORS } from "../COLORS";
 
 import { CurrentUserContext } from "../CurrentUserContext";
 
-export const PostMessage = (props) => {
-  //const [charCount, setCharCount] = React.useState(280);
+//This component will render a form that will allow the user to post a new
+//tweet, the function that is passed onto the button is from the CurrentUserContext
+//that will also do the character limit validation.
 
+export const PostMessage = (props) => {
   const { currentUser, charCount, setCharCount } = React.useContext(
     CurrentUserContext
   );
+
+  function handleCharCount(ev) {
+    setCharCount(280 - ev.target.value.length);
+  }
 
   return (
     <Wrapper>
@@ -20,21 +26,24 @@ export const PostMessage = (props) => {
           id="Message"
           type="text"
           placeholder="What's happening?..."
-          maxlength="280"
-          onChange={(ev) => {
-            setCharCount(280 - ev.target.value.length);
-          }}
+          onChange={handleCharCount}
         ></TextArea>
       </MessageContainer>
       <MessageButtonCtn>
-        <MsgCount>{charCount}</MsgCount>
+        <MsgCount
+          style={{
+            color: charCount < 0 ? "red" : "green",
+          }}
+        >
+          {charCount}
+        </MsgCount>
         <MsgButton onClick={props.handleOnClick}>Post</MsgButton>
       </MessageButtonCtn>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
   /* box-shadow: 0px 10px 15px -8px rgba(211, 211, 211, 0.75); */
@@ -75,19 +84,26 @@ const MsgButton = styled.button`
     cursor: pointer;
   }
 
+  &:focus {
+    outline: 2px solid black;
+  }
+
   &:active {
     transform: scale(1.05);
     outline: none;
   }
 `;
 
-const TextArea = styled.input`
+const TextArea = styled.textarea`
   width: 100%;
-  height: 100px;
+  height: 80%;
   font-size: 24px;
   outline: none;
   border: none;
   padding-left: 20px;
+  margin: 15px;
+  resize: none;
+  font-family: inherit;
 
   &::placeholder {
     opacity: 0.7;

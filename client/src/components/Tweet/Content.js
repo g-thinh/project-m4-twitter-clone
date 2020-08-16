@@ -12,13 +12,16 @@ export const Content = (props) => {
 
 const TweetContent = styled.div`
   /* border: 5px solid red; */
+  /* word-wrap: break-word; */
   padding: 15px;
 `;
 
-const Message = styled.div`
+const Message = styled.h1`
   padding: 15px 0;
   font-size: 22px;
   font-weight: 500;
+  word-wrap: break-word;
+  /* width: 100%; */
 `;
 
 const Media = styled.img`

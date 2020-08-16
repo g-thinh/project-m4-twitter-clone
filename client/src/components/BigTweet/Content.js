@@ -16,7 +16,6 @@ export const Content = (props) => {
 };
 
 const TweetContent = styled.div`
-  /* border: 5px solid red; */
   padding: 15px;
 `;
 
@@ -31,6 +30,7 @@ const Message = styled.div`
   padding: 2% 15px;
   font-size: 24px;
   font-weight: 500;
+  overflow-wrap: break-word;
 `;
 
 const Media = styled.img`

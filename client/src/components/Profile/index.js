@@ -50,7 +50,7 @@ const Profile = () => {
 
 const Wrapper = styled.div`
   outline: 1px solid lightgray;
-  width: 100%;
+  width: 80%;
 `;
 
 export default Profile;
