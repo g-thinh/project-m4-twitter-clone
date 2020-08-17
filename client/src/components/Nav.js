@@ -26,7 +26,7 @@ const Nav = ({ children }) => {
           <NavItem>
             <StyledLink exact to="/" activeStyle={{ color: COLORS.primary }}>
               <FiHome size={32} />
-              <span>Home</span>
+              <LinkName>Home</LinkName>
             </StyledLink>
           </NavItem>
           <NavItem>
@@ -35,7 +35,7 @@ const Nav = ({ children }) => {
               activeStyle={{ color: COLORS.primary }}
             >
               <FiUser size={32} />
-              <span>Profile</span>
+              <LinkName>Profile</LinkName>
             </StyledLink>
           </NavItem>
           <NavItem>
@@ -44,13 +44,13 @@ const Nav = ({ children }) => {
               activeStyle={{ color: COLORS.primary }}
             >
               <FiBell size={32} />
-              <span>Notifications</span>
+              <LinkName>Notifications</LinkName>
             </StyledLink>
           </NavItem>
           <NavItem>
             <StyledLink to="/bookmarks" activeStyle={{ color: COLORS.primary }}>
               <FiBookmark size={32} />
-              <span>Bookmarks</span>
+              <LinkName>Bookmarks</LinkName>
             </StyledLink>
           </NavItem>
         </NavList>
@@ -88,6 +88,9 @@ const NavWrapper = styled.div`
   height: 100vh;
   width: 33%;
   margin-top: 2%;
+  @media (max-width: 850px) {
+    width: 100px;
+  }
 `;
 
 const NavList = styled.div`
@@ -135,6 +138,16 @@ const MeowButton = styled.button`
   &:active {
     transform: scale(1.05);
     outline: none;
+  }
+
+  @media (max-width: 850px) {
+    display: none;
+  }
+`;
+
+const LinkName = styled.span`
+  @media (max-width: 850px) {
+    display: none;
   }
 `;
 
