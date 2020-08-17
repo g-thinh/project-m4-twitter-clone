@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Action = ({ color, size, children }) => {
+const Action = ({ color, size, children, handleClick }) => {
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
@@ -10,6 +10,7 @@ const Action = ({ color, size, children }) => {
       onMouseLeave={() => setIsHovered(false)}
       circleColor={color}
       style={{ width: size, height: size, color: isHovered ? color : null }}
+      onClick={handleClick}
     >
       {children}
     </Wrapper>
