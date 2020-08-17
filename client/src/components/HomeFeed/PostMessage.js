@@ -10,13 +10,20 @@ import { CurrentUserContext } from "../CurrentUserContext";
 //that will also do the character limit validation.
 
 export const PostMessage = (props) => {
-  const { currentUser, charCount, setCharCount } = React.useContext(
+  const { currentUser, charCount, setCharCount, SendPost } = React.useContext(
     CurrentUserContext
   );
 
   function handleCharCount(ev) {
     setCharCount(280 - ev.target.value.length);
   }
+
+  React.useEffect(() => {
+    console.log("[PostMessage.js] has rendered...");
+    return () => {
+      console.log("[PostMessage.js] is unmounting...");
+    };
+  }, []);
 
   return (
     <Wrapper>
@@ -37,7 +44,7 @@ export const PostMessage = (props) => {
         >
           {charCount}
         </MsgCount>
-        <MsgButton onClick={props.handleOnClick}>Post</MsgButton>
+        <MsgButton onClick={SendPost}>Post</MsgButton>
       </MessageButtonCtn>
     </Wrapper>
   );

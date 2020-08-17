@@ -5,7 +5,6 @@ export const CurrentUserContext = React.createContext(null);
 export const CurrentUserProvider = ({ children }) => {
   // These states define what the current user can interact with, which includes
   // creating posts
-
   // ####### USER STATES #######
   const [currentUser, setCurrentUser] = React.useState(null);
   const [homeFeed, setHomeFeed] = React.useState([]);
@@ -32,8 +31,7 @@ export const CurrentUserProvider = ({ children }) => {
     }
   };
 
-  // ############ HOME FEED FETCHES ##########
-
+  //retrieves homefeed for the current user
   const fetchHomeFeed = async () => {
     const url = `/api/me/home-feed`;
     try {
@@ -53,21 +51,21 @@ export const CurrentUserProvider = ({ children }) => {
   //once the tweet is posted, re-fetch the homeFeed which triggers a re-render
   //within the HomeFeed component
 
-  const postTweet = () => {
+  const postTweet = async () => {
     const url = `/api/tweet`;
     let msg = document.getElementById("Message").value;
     try {
-      fetch(url, {
+      const res = await fetch(url, {
         method: "POST",
         body: JSON.stringify({ status: msg }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-      }).then(fetchHomeFeed());
+      });
       document.getElementById("Message").value = "";
       setCharCount(280);
-      console.log("[HomeFeed.js] New Post Received, re-rendering...");
+      return await res.json();
     } catch (error) {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
@@ -77,11 +75,13 @@ export const CurrentUserProvider = ({ children }) => {
 
   function SendPost(ev) {
     ev.preventDefault();
-    console.log("SendPost Triggered");
+    console.log("New Post Received Sent!");
     if (charCount > 0) {
-      postTweet();
+      postTweet().then(fetchHomeFeed());
+      window.location.reload();
     } else {
       window.alert("Too many letters");
+      return;
     }
   }
 
@@ -89,8 +89,12 @@ export const CurrentUserProvider = ({ children }) => {
   // and profile data ONCE
 
   React.useEffect(() => {
+    console.log("[CurrentUserContext.js] is mounted!");
     fetchProfile();
     fetchHomeFeed();
+    return () => {
+      console.log("[CurrentUserContext.js] is unmounting...");
+    };
   }, []);
 
   return (
@@ -105,7 +109,6 @@ export const CurrentUserProvider = ({ children }) => {
         charCount,
         setCharCount,
         fetchHomeFeed,
-        postTweet,
         fetchProfile,
         SendPost,
       }}
