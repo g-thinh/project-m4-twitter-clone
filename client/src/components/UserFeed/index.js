@@ -31,8 +31,31 @@ const UserFeed = () => {
     }
   };
 
+  const fetchHomeFeed = async () => {
+    const url = `/api/me/home-feed`;
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      setUserFeed(data);
+      setUserFeedStatus("idle");
+    } catch (error) {
+      console.log(
+        `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
+      );
+      window.location.href = "/404";
+    }
+  };
+
+  //this is a band-aid solution, i need to fetch the current user's feed
+  //which is treasurymog's feed through the /me/home-feed API not the regular
+  //handler.
+
   React.useEffect(() => {
-    fetchFeed();
+    if (window.location.pathname.includes("treasurymog")) {
+      fetchHomeFeed();
+    } else {
+      fetchFeed();
+    }
   }, []);
 
   // ### RENDER COMPONENT ###

@@ -8,34 +8,54 @@ import { PostMessage } from "./PostMessage";
 import { Tweet } from "../Tweet";
 
 const HomeFeed = () => {
-  const {
-    currentUser,
-    profileStatus,
-    homeFeed,
-    homeFeedStatus,
-    postTweet,
-    SendPost,
-  } = React.useContext(CurrentUserContext);
+  //import the current user's profile data to render the avatar image
+  //in the PostMessage.js component
+  const { currentUser, profileStatus } = React.useContext(CurrentUserContext);
+
+  //This fetch is slightly similiar to the one found in UserFeed.js
+  //I found that it was easier to re-render the feed itself
+
+  const [userFeed, setUserFeed] = React.useState();
+  const [userFeedStatus, setUserFeedStatus] = React.useState("loading");
+
+  const fetchFeed = async () => {
+    const url = `/api/me/home-feed`;
+    try {
+      console.log(`[HomeFeed.js] fetching feed data for current user`);
+      const res = await fetch(url);
+      const data = await res.json();
+      setUserFeed(data);
+      setUserFeedStatus("idle");
+    } catch (error) {
+      console.log(
+        `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
+      );
+      window.location.href = "/404";
+    }
+  };
 
   //When the user posts a tweet, the homeFeed state will get updated
   //and the useEffect() will trigger a re-render
 
-  React.useEffect(() => {}, [homeFeed]);
+  React.useEffect(() => {
+    console.log("[HomeFeed.js] has rendered...");
+    fetchFeed();
+    return () => {
+      console.log("[HomeFeed.js] is unmounting...");
+    };
+  }, []);
 
   return (
     <Wrapper>
       <Title>Home</Title>
       {profileStatus === "idle" ? (
-        <PostMessage
-          avatarSrc={currentUser.profile.avatarSrc}
-          handleOnClick={SendPost}
-        />
+        <PostMessage avatarSrc={currentUser.profile.avatarSrc} />
       ) : (
         <LoadingSpinner />
       )}
       <br />
-      {homeFeedStatus === "idle" ? (
-        <Tweet data={homeFeed} />
+      {userFeedStatus === "idle" ? (
+        <Tweet data={userFeed} />
       ) : (
         <LoadingSpinner />
       )}
