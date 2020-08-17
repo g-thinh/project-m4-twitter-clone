@@ -8,10 +8,22 @@ import { Header } from "./Header";
 import { Content } from "./Content";
 import { ActionBar } from "./ActionBar";
 
+import { CurrentUserContext } from "../CurrentUserContext";
+
 //####################### TWEET COMPONENT ############################
 export const Tweet = (props) => {
+  const { homeFeed } = React.useContext(CurrentUserContext);
+
   const ID = props.data.tweetIds;
   const TWEETS = props.data.tweetsById;
+
+  React.useEffect(() => {
+    console.log("[Tweet.js] mounted and rendered data");
+    console.log(`There are now ${ID.length} Tweets...`);
+    return () => {
+      console.log("[Tweet.js] is unmounting...");
+    };
+  }, [homeFeed]);
 
   return (
     <TweetList>
@@ -28,6 +40,7 @@ export const Tweet = (props) => {
             <Content message={TWEETS[id].status} media={TWEETS[id].media} />
           </Link>
           <ActionBar
+            tweetId={TWEETS[id].id}
             isRetweeted={TWEETS[id].isRetweeted}
             isLiked={TWEETS[id].isLiked}
             numLikes={TWEETS[id].numLikes}

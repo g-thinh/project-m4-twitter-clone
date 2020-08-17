@@ -10,14 +10,20 @@ import { ActionBar } from "./ActionBar";
 import { FiArrowLeft } from "react-icons/fi";
 
 //####################### TWEET COMPONENT ############################
+
+//This is the larger version of the tweet, renders whenever the user clicks
+//on a tweet's content from any tweet feeds.
+
 export const BigTweet = (props) => {
-  const ID = props.data.tweetIds;
-  const TWEETS = props.data.tweetsById;
+  //tweet data passed as props is converted into state.
+  const [DATA, setDATA] = React.useState(props.data.tweet);
 
-  const DATA = props.data.tweet;
-
-  console.log("THIS PAGE RENDERS THIS");
-  console.log(DATA);
+  React.useEffect(() => {
+    console.log("[BigTweet.js] mounted and rendered data");
+    return () => {
+      console.log("[BigTweet.js] unmounting..");
+    };
+  }, []);
 
   return (
     <div>
@@ -39,6 +45,7 @@ export const BigTweet = (props) => {
         timestamp={DATA.timestamp}
       />
       <ActionBar
+        tweetId={DATA.id}
         isRetweeted={DATA.isRetweeted}
         isLiked={DATA.isLiked}
         numLikes={DATA.numLikes}
@@ -61,23 +68,4 @@ const Title = styled.span`
   line-height: 1.6;
   font-size: 30px;
   font-weight: 800;
-`;
-
-const TweetList = styled.ul`
-  /* border: 1px solid lightgray; */
-  box-shadow: 0px 10px 15px -8px rgba(211, 211, 211, 0.75);
-
-  & li {
-    border-bottom: 1px solid lightgray;
-    /* border: 5px solid red; */
-  }
-
-  & li:hover {
-    background: #f9f9f9;
-  }
-
-  & a {
-    color: inherit;
-    text-decoration: none;
-  }
 `;

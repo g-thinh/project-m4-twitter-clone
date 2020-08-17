@@ -31,6 +31,12 @@ const Profile = () => {
 
   React.useEffect(() => {
     fetchUserProfile();
+    console.log(
+      `[Profile.js] has rendered profile for ${window.location.pathname}`
+    );
+    return () => {
+      console.log("[Profile.js] unmounting...");
+    };
   }, []);
 
   return (
