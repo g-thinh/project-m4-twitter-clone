@@ -4,14 +4,11 @@ import styled from "styled-components";
 import { LoadingSpinner } from "./LoadingSpinner";
 import { BigTweet } from "./BigTweet";
 
-import { CurrentUserContext } from "./CurrentUserContext";
-
 const TweetDetails = () => {
-  const { currentUser } = React.useContext(CurrentUserContext);
-
-  console.log(currentUser);
   const [tweetDetails, setTweetDetails] = React.useState(null);
   const [tweetStatus, setTweetStatus] = React.useState("loading");
+
+  //fetch the tweet data by the URL parameter in the Critter API
 
   const fetchTweet = async () => {
     const url = `/api${window.location.pathname}`;
@@ -21,13 +18,14 @@ const TweetDetails = () => {
       console.log(
         `[TweetDetails.js] fetching tweet data from ${window.location.pathname}`
       );
+      // console.log(data);
       setTweetDetails(data);
       setTweetStatus("idle");
     } catch (error) {
       console.log(
         `Can’t access ${url} response. Blocked by browser? Error Code ${error}`
       );
-      // window.location.href = "/";
+      window.location.href = "/404";
     }
   };
 
